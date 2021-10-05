@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EYE-MOVEMENT</title>
+    <style>
+        body {
+            background-color: rgb(220, 220, 247);
+            text-align: center;
+        }
+
+        .center-div {
+            width: 550px;
+            height: 550px;
+            margin: auto;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgb(247, 83, 83);
+            border-radius: 10%;
+        }
+
+        .face {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: blue;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .eyes {
+            width: inherit;
+            height: 300px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: auto;
+            background-color: green;
+            border-radius: 25%;
+        }
+
+        .eye {
+            width: 220px;
+            height: 220px;
+            background-color: rgb(235, 187, 159);
+            border-radius: 50%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .pupil {
+            width: 50px;
+            height: 50px;
+            background-color: black;
+            border-radius: 50px;
+        }
+
+        .smile {
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="center-div">
+        <div class="face">
+            <div class="eyes">
+                <div class="eye">
+                    <div class="pupil"></div>
+                </div>
+                <div class="eye">
+                    <div class="pupil"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+    <script>
+
+
+        let pupil = document.getElementsByClassName('pupil');
+        console.log(pupil);
+        let pupilArr = Array.from(pupil);
+        let pupilstart = -85;
+        let pupilrange = 170;
+        let mouseXStart = 0;
+        let mouseXEnd = window.innerWidth;
+        let currentX = 0;
+        let fracX = 0;
+        let mouseYEnd = window.innerHeight;
+        let currentY = 0;
+        let fracY = 0;
+        let mouseXrange = mouseXEnd - mouseXStart;
+        const mouseMove = (event) => {
+            currentX = event.clientX - mouseXStart;
+            fracX = currentX / mouseXrange;
+            currentY = event.clientY;
+            fracY = currentY / window.innerHeight;
+            let pupilsXcur = pupilstart + (fracX * pupilrange);
+            let pupilsYcur = pupilstart + (fracY * pupilrange);
+            pupilArr.forEach((curPupil) => {
+                curPupil.style.transform = `translate(${pupilsXcur}px,${pupilsYcur}px)`;
+            })
+        }
+        const windowRes = (event) => {
+            mouseXEnd = window.innerWidth;
+            mouseYEnd = window.innerHeight;
+            mouseXrange = mouseXEnd - mouseXStart
+        }
+        window.addEventListener('mousemove', mouseMove);
+        window.addEventListener('resize', windowRes);
+    </script>
+</body>
+
+</html>
